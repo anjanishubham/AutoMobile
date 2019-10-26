@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">AutoMobile</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="product_name">Product Name</string>
+    <string name="product_description">Product Description</string>
+    <string name="product_mrp">Product MRP</string>
+    <string name="product_sp">Product SP</string>
+    <string name="product_models">Select Models</string>
+    <string name="add">Add</string>
+    <string name="supplier_cancel_button">Cancel</string>
+    <string name="supplier_submit_button">submit</string>
+    <string name="porduct_suppliers">Select Suppliers</string>
+    <string name="_admin">Admin</string>
+    <string name="hint_text">phone number</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_of_product">No of product</string>
+
+
+    <string-array name="motor_type">
+        <item>Bike </item>
+        <item>Car</item>
+        <item>Scooter</item>
+    </string-array>
+    <string-array name="product_category">
+        <item>Wheels</item>
+        <item>Tires</item>
+        <item>Brakes</item>
+        <item>Light</item>
+        <item>Engine Oil</item>
+        <item>Helmet</item>
+        <item>Bike Cover</item>
+        <item>Side mirror</item>
+
+    </string-array>
+</resources>
