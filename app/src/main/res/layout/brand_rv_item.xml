@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/apk/res-auto">
+<data>
+    <import type="android.view.View"/>
+    <variable
+        name="model"
+        type="com.lovelycoding.automobile.datamodel.BrandRvItem" />
+</data>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="80dp"
+    android:gravity="center"
+    android:layout_height="150dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        tools:cardCornerRadius="3dp"
+        >
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:id="@+id/rv_brand_image"
+            bind:brandImageUrl="@{model.brandImageUrl}"
+
+            />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:text="@{model.brandName}"
+            android:textColor="@color/secondaryText"
+            android:layout_marginBottom="8dp"
+            android:id="@+id/rv_brand_name"/>
+        <ToggleButton
+            android:visibility="gone"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:id="@+id/checkbox"
+            android:layout_gravity="top"
+            android:textOff=""
+            android:textOn=""
+            android:background="@drawable/circular_check_box"
+            android:layout_marginTop="5dp"
+
+            />
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
+</layout>

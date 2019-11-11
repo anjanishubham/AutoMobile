@@ -1,9 +1,12 @@
 package com.lovelycoding.automobile;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.lovelycoding.automobile.ui.login.LoginActivity;
 import com.lovelycoding.automobile.util.App;
 
@@ -24,14 +27,18 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(toolbar);
-        if(App.mAuth.getCurrentUser()==null){
+        if(FirebaseAuth.getInstance().getCurrentUser()==null){
             Intent intent=new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
         else {
+            App.fireBaseInstance(MainActivity.this);
+            Log.d(TAG, "onCreate: "+App.mAuth);
+            Log.d(TAG, "onCreate: "+App.mAuth);
             AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                    R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                    R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_settings)
                     .build();
             NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -40,6 +47,7 @@ public class MainActivity extends AppCompatActivity  {
       //  getDataFromFireBase();
 
     }
+
 
 
 }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="handler"
+            type="com.lovelycoding.automobile.ui.home.HomeListener" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="130dp"
+        android:layout_height="140dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardElevation="20dp"
+            app:contentPadding="5dp"
+            tools:cardCornerRadius="5dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_select"
+                android:layout_width="120dp"
+                android:layout_height="100dp"
+                android:onClick="@{handler::onClickOnRecentIV}" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_recent_item_name"
+                android:layout_width="120dp"
+                android:layout_height="20dp"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="@string/add"
+                android:textColor="@color/secondaryText" />
+
+            <ToggleButton
+                android:id="@+id/checkbox"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/circular_check_box"
+                android:textOff=""
+                android:textOn=""
+                android:visibility="gone"
+
+                />
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</layout>

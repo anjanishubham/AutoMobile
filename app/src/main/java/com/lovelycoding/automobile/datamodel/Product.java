@@ -1,19 +1,26 @@
 package com.lovelycoding.automobile.datamodel;
 
+import android.view.View;
+import android.widget.ImageView;
+
+import androidx.databinding.BindingAdapter;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Product {
     private String productId;
-    private String productName;
-    private String productDescription;
-    private long productMRP;
-    private long productSP;
-    private int productCount;
-    private List<String> productImageUrl;
     private String motorName;
     private String motorBrandName;
+    private String productName;
     private String productCategory;
+    private String productDescription;
+    private int productCount;
+    private long productMRP;
+    private long productSP;
+    private List<String> productImageUrl;
 
 
     public Product() {
@@ -120,6 +127,11 @@ public class Product {
                 ", motorBrandName='" + motorBrandName + '\'' +
                 ", productCategory='" + productCategory + '\'' +
                 '}';
+    }
+
+    @BindingAdapter("ImageUrl")
+    public static void setImageUrl(ImageView view, String imageUrl) {
+        Picasso.with(view.getContext()).load(imageUrl).into(view);
     }
 }
 

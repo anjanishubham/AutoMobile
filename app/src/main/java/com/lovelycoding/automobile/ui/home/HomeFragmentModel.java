@@ -48,7 +48,6 @@ public class HomeFragmentModel {
             filepath.putFile(imageUri.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
                     if (taskSnapshot.getMetadata().getReference() != null) {
                         Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
                         result.addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -85,7 +84,7 @@ public class HomeFragmentModel {
     }
 
     private void saveProductIntoDatabase(Product product) {
-        App.mRootDatabaseRef.child(App.mAuth.getUid().toString()).child(product.getProductId()).setValue(product);
+        App.mCurrentUserDatabaseRef.child(product.getProductId()).setValue(product);
     }
 
 
@@ -104,8 +103,8 @@ public class HomeFragmentModel {
     public boolean verifyInput() {
 
         product.setMotorName(dataBinding.spinnerMotorType.getSelectedItem().toString());
-        product.setProductCategory(dataBinding.spinnerProductCategory.getSelectedItem().toString());
-        product.setMotorBrandName("Hero");
+        product.setMotorBrandName(dataBinding.recentBrandLayout.ivSelect.tvRecentItemName.getText().toString());
+        product.setProductCategory(dataBinding.recentCategoryLayout.ivSelect.tvRecentItemName.getText().toString());
         if(!dataBinding.productName.getText().toString().isEmpty())
         {
             product.setProductName(dataBinding.productName.getText().toString());

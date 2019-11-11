@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
@@ -42,7 +43,7 @@ public class MyLoginClickHandler {
         String password=databinding.tiedPhonePassword.getText().toString().trim();
 
         if(!emailId.isEmpty()&&!password.isEmpty()) {
-            App.mAuth.signInWithEmailAndPassword(emailId,password)
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(emailId,password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {

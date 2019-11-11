@@ -1,4 +1,4 @@
-package com.lovelycoding.automobile.ui.home;
+package com.lovelycoding.automobile.ui.home.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
