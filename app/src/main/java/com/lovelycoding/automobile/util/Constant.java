@@ -8,6 +8,10 @@ public class Constant {
     public static final String PRODUCT_BRAND_IMAGE_STORAGE="_product_brand_image";
     public static final String PRODUCT_CATEGORY_IMAGE_STORAGE="_product_category_image";
     public static final String PRODUCT_CATEGORY_IMAGE_DATABASE="_product_category_image_database";
+    public static final String USER_PROFILE_DATABASE="_userProfile";
+    public static final String USER_PROFILE_IMAGE_STORAGE="_userProfileImage";
+
+
 
 
 }

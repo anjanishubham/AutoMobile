@@ -7,7 +7,8 @@ import com.lovelycoding.automobile.databinding.FragmentHomeBinding;
 import com.lovelycoding.automobile.datamodel.Product;
 import com.lovelycoding.automobile.ui.home.brand.bike.BrandActivity;
 import com.lovelycoding.automobile.ui.home.category.CategoryActivity;
-import com.lovelycoding.automobile.util.App;
+import com.lovelycoding.automobile.util.DatabaseRef;
+
 public class HomeListener {
     private static final String TAG = "HomeListener";
     RuntimePermission mPermission;
@@ -40,7 +41,7 @@ public class HomeListener {
 
     private void saveProductIntoDatabase(Product product)
     {
-        App.mRootDatabaseRef.child(App.mAuth.getUid().toString()).child(product.getProductId()).setValue(product);
+        DatabaseRef.mRootDatabaseRef.child(DatabaseRef.mAuth.getUid().toString()).child(product.getProductId()).setValue(product);
     }
 
 

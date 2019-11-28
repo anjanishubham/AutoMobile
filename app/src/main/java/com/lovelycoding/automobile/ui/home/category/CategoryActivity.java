@@ -2,7 +2,6 @@ package com.lovelycoding.automobile.ui.home.category;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
@@ -30,7 +29,7 @@ import com.lovelycoding.automobile.ui.home.brand.dialogfragment.NetworkNotFound;
 import com.lovelycoding.automobile.ui.home.category.adapter.CategoryAdapter;
 import com.lovelycoding.automobile.ui.home.category.adapter.CategoryListener;
 import com.lovelycoding.automobile.ui.home.SelectItemCallback;
-import com.lovelycoding.automobile.util.App;
+import com.lovelycoding.automobile.util.DatabaseRef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +91,7 @@ public class CategoryActivity extends AppCompatActivity implements CategoryListe
         mRecycleView.addItemDecoration(new GridSpacingItemDecoration(4, dpToPx(10), false));
         mRecycleView.setNestedScrollingEnabled(false);
         mRecycleView.setAdapter(mAdapter);
-        if(App.isNetworkAvailable()){
+        if(DatabaseRef.isNetworkAvailable()){
             mViewModel.getCategoryList(mAdapter,motorType,mProgressBar);
         }
         else {

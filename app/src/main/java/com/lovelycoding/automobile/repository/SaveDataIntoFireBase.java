@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.StorageReference;
@@ -13,7 +16,7 @@ import com.lovelycoding.automobile.datamodel.BrandRvItem;
 import com.lovelycoding.automobile.datamodel.PcategoryRvItem;
 import com.lovelycoding.automobile.datamodel.Product;
 import com.lovelycoding.automobile.ui.home.brand.dialogfragment.AddNewBrad;
-import com.lovelycoding.automobile.util.App;
+import com.lovelycoding.automobile.util.DatabaseRef;
 
 import java.util.HashMap;
 import java.util.List;
@@ -37,7 +40,7 @@ public class SaveDataIntoFireBase {
 
     private ProgressDialog mProgressDialog;
     public void saveBrandImageFireBaseStorage(final BrandRvItem ob, Uri uri, final String motorType) {
-        final StorageReference filepath = App.mBrandImageStorageRef.child(ob.getBrandName()).child(String.valueOf(System.currentTimeMillis()) + ".PNG");
+        final StorageReference filepath = DatabaseRef.mBrandImageStorageRef.child(ob.getBrandName()).child(String.valueOf(System.currentTimeMillis()) + ".PNG");
         filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -58,7 +61,7 @@ public class SaveDataIntoFireBase {
 
     public void saveBrandIntoFireDataBase(BrandRvItem ob, String motorType) {
 
-        App.mBrandDatabaseRef.child(motorType).child(ob.getBrandName()).setValue(ob);
+        DatabaseRef.mBrandDatabaseRef.child(motorType).child(ob.getBrandName()).setValue(ob);
         AddNewBrad.mProgressBar.setVisibility(View.GONE);
     }
 
@@ -66,7 +69,7 @@ public class SaveDataIntoFireBase {
     public void saveCateGoryImageIntoFireBaseStroage(final PcategoryRvItem ob, Uri uri, final String motorType) {
         Log.d(TAG, "onSuccess: "+motorType);
 
-        final StorageReference filepath = App.mCategoryImageStorageRef.child(ob.getCategoryItemName()).child(String.valueOf(System.currentTimeMillis()) + ".PNG");
+        final StorageReference filepath = DatabaseRef.mCategoryImageStorageRef.child(ob.getCategoryItemName()).child(String.valueOf(System.currentTimeMillis()) + ".PNG");
         filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -86,22 +89,22 @@ public class SaveDataIntoFireBase {
     }
 
     private void saveCategoryIntoFireBaseDataBase(PcategoryRvItem ob, String motorType) {
-        App.mCategoryDatabaseRef.child(motorType).child(ob.getCategoryItemName()).setValue(ob);
+        DatabaseRef.mCategoryDatabaseRef.child(motorType).child(ob.getCategoryItemName()).setValue(ob);
         AddNewBrad.mProgressBar.setVisibility(View.GONE);
     }
 
     public void saveRecentCategoryDataIntoDatabase(List<PcategoryRvItem> mCategoryList) {
         for (int i = 0; i <mCategoryList.size() ; i++) {
 
-            App.mCurrentUserRecentCategoryDatabaseRef.child(i+"").setValue(mCategoryList.get(i));
+            DatabaseRef.mCurrentUserRecentCategoryDatabaseRef.child(i+"").setValue(mCategoryList.get(i));
         }
     }
 
     public void saveRecentBrandDataIntoDatabase(List<BrandRvItem> rvBrandItemList) {
         Map<String, BrandRvItem> mapList = new HashMap<>();
         for (int i = 0; i <rvBrandItemList.size() ; i++) {
-          //  App.mCurrentUserRecentCategoryDatabaseRef.child(recent+"").setValue(ob);
-            App.mCurrentUserRecentBrandDatabaseRef.child(i+"").setValue(rvBrandItemList.get(i));
+          //  DatabaseRef.mCurrentUserRecentCategoryDatabaseRef.child(recent+"").setValue(ob);
+            DatabaseRef.mCurrentUserRecentBrandDatabaseRef.child(i+"").setValue(rvBrandItemList.get(i));
         }
     }
 
@@ -111,7 +114,51 @@ public class SaveDataIntoFireBase {
 
         Map<String, Object> map = new HashMap<>();
         map.put("productCount",count);
-        App.mCurrentUserDatabaseRef.child(product.getProductId()).updateChildren(map);
+        DatabaseRef.mCurrentUserDatabaseRef.child(product.getProductId()).updateChildren(map);
     }
 
+    public void updateUserProfileImage(Uri uri) {
+        final StorageReference filepath = DatabaseRef.mCurrentUserProfileImageStorageRef.child(DatabaseRef.mAuth.getUid()+".PNG");
+        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        String url = uri.toString();
+                        saveUserImageUrl(url);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: Fail "+e.getLocalizedMessage());
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: "+e.getLocalizedMessage());
+            }
+        });
+
+    }
+
+    private void saveUserImageUrl(String url) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userProfileUrl",url);
+        DatabaseRef.mCurrentUserProfileDatabaseRef.child(DatabaseRef.mAuth.getUid()).updateChildren(map);
+    }
+    public void updateUserName(String userName) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userName",userName);
+        DatabaseRef.mCurrentUserProfileDatabaseRef.child(DatabaseRef.mAuth.getUid()).updateChildren(map);
+    }
+
+    public void savePhoneNumber() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userPhone","8681964387");
+        DatabaseRef.mCurrentUserProfileDatabaseRef.child(DatabaseRef.mAuth.getUid()).updateChildren(map);
+    }
 }

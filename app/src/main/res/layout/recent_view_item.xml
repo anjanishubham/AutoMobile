@@ -27,6 +27,7 @@
                 android:id="@+id/iv_select"
                 android:layout_width="120dp"
                 android:layout_height="100dp"
+                android:src="@drawable/add_image_256"
                 android:onClick="@{handler::onClickOnRecentIV}" />
 
             <androidx.appcompat.widget.AppCompatTextView

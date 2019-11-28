@@ -7,18 +7,15 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.lovelycoding.automobile.databinding.FragmentHomeBinding;
 import com.lovelycoding.automobile.datamodel.Product;
-import com.lovelycoding.automobile.ui.home.HomeFragment;
-import com.lovelycoding.automobile.util.App;
+import com.lovelycoding.automobile.util.DatabaseRef;
 
 import java.util.List;
 
@@ -44,7 +41,7 @@ public class HomeFragmentModel {
 
         progressDialog.show();
         for (int i = 0; i <imageUri.size() ; i++) {
-            final StorageReference filepath = App.mRootStorageRef.child(product.getProductId()).child(String.valueOf(System.currentTimeMillis()) + ".PNG");
+            final StorageReference filepath = DatabaseRef.mRootStorageRef.child(product.getProductId()).child(String.valueOf(System.currentTimeMillis()) + ".PNG");
             filepath.putFile(imageUri.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -84,7 +81,7 @@ public class HomeFragmentModel {
     }
 
     private void saveProductIntoDatabase(Product product) {
-        App.mCurrentUserDatabaseRef.child(product.getProductId()).setValue(product);
+        DatabaseRef.mCurrentUserDatabaseRef.child(product.getProductId()).setValue(product);
     }
 
 

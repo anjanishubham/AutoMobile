@@ -16,11 +16,14 @@ import com.google.firebase.database.DatabaseError;
 import com.lovelycoding.automobile.datamodel.BrandRvItem;
 import com.lovelycoding.automobile.datamodel.PcategoryRvItem;
 import com.lovelycoding.automobile.datamodel.Product;
+import com.lovelycoding.automobile.datamodel.UserProfile;
 import com.lovelycoding.automobile.ui.home.brand.bike.BrandListCallback;
 import com.lovelycoding.automobile.ui.home.category.adapter.CategoryAdapter;
 import com.lovelycoding.automobile.ui.callback_interface.RecentCategoryInterface;
 import com.lovelycoding.automobile.ui.dashboard.callback.DashboardCallback;
-import com.lovelycoding.automobile.util.App;
+import com.lovelycoding.automobile.ui.settings.SettingUserProfile;
+import com.lovelycoding.automobile.ui.settings.SettingsViewModel;
+import com.lovelycoding.automobile.util.DatabaseRef;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +49,7 @@ public class GetDataFromFireBase {
         mBrandList.clear();
 
 
-        App.mBrandDatabaseRef.child(brandName).addChildEventListener(new ChildEventListener() {
+        DatabaseRef.mBrandDatabaseRef.child(brandName).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d(TAG, "onChildAdded: "+dataSnapshot.getValue(BrandRvItem.class));
@@ -82,10 +85,10 @@ public class GetDataFromFireBase {
     }*/
 
     public void getBrandListFromDatabase(final BrandListCallback mCallback, Context context, String motorType) {
-        if(App.isNetworkAvailable()) {
+        if(DatabaseRef.isNetworkAvailable()) {
 
             final List<BrandRvItem> mBrandList = new ArrayList<>();
-            App.mBrandDatabaseRef.child(motorType).addChildEventListener(new ChildEventListener() {
+            DatabaseRef.mBrandDatabaseRef.child(motorType).addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -126,7 +129,7 @@ public class GetDataFromFireBase {
 
     public void getCategoryListFromFireBaseDatabase(final CategoryAdapter mAdapter, String motorType, final ProgressBar mProgressBar) {
         final List<PcategoryRvItem> mList = new ArrayList<>();
-        App.mCategoryDatabaseRef.child(motorType).addChildEventListener(new ChildEventListener() {
+        DatabaseRef.mCategoryDatabaseRef.child(motorType).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 PcategoryRvItem ob= dataSnapshot.getValue(PcategoryRvItem.class);
@@ -159,7 +162,7 @@ public class GetDataFromFireBase {
     }
     public void getRecentCategoryDataFromDataBase(final RecentCategoryInterface mCallback) {
         final List<PcategoryRvItem> mCategoryList = new ArrayList<>();
-        App.mCurrentUserRecentCategoryDatabaseRef.addChildEventListener(new ChildEventListener() {
+        DatabaseRef.mCurrentUserRecentCategoryDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 mCategoryList.add(dataSnapshot.getValue(PcategoryRvItem.class));
@@ -195,7 +198,7 @@ public class GetDataFromFireBase {
     public void getRecentBrandDataFromDatabase(final RecentCategoryInterface mCallback) {
         final List<BrandRvItem> mBrandList = new ArrayList<>();
 
-        App.mCurrentUserRecentBrandDatabaseRef.addChildEventListener(new ChildEventListener() {
+        DatabaseRef.mCurrentUserRecentBrandDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
@@ -234,7 +237,7 @@ public class GetDataFromFireBase {
     public void getProductList(final DashboardCallback mCallback) {
         //final MutableLiveData<List<Product>> mLiveDataList = new MutableLiveData<>();
         final List<Product> mList = new ArrayList<>();
-        App.mCurrentUserDatabaseRef.addChildEventListener(new ChildEventListener() {
+        DatabaseRef.mCurrentUserDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d(TAG, "onChildAdded: "+s);
@@ -271,6 +274,60 @@ public class GetDataFromFireBase {
             }
         });
         //return mLiveDataList;
+    }
+
+    public void getUserProfile(final SettingUserProfile mUserProfile) {
+        DatabaseRef.mCurrentUserProfileDatabaseRef.child(DatabaseRef.mAuth.getUid()).addChildEventListener(new ChildEventListener() {
+            UserProfile userProfile=new UserProfile();
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+               String str=dataSnapshot.getValue(String.class);
+                Log.d(TAG, "onChildAdded: "+str);
+
+                if(dataSnapshot.getKey().equals("userName")){
+                     userProfile.setUserName(str);
+                }
+                else if (dataSnapshot.getKey().equals("userPhone")){
+                        userProfile.setUserPhone(str);
+                 } else if (dataSnapshot.getKey().equals("userProfileUrl")) {
+                        userProfile.setUserProfileUrl(str);
+                 }
+                mUserProfile.getUserProfile(userProfile);
+            }
+
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                String str=dataSnapshot.getValue(String.class);
+                Log.d(TAG, "onChildAdded: changed  "+str);
+
+                if(dataSnapshot.getKey().equals("userName")){
+                    userProfile.setUserName(str);
+                }
+                else if (dataSnapshot.getKey().equals("userPhone")){
+                    userProfile.setUserPhone(str);
+                } else if (dataSnapshot.getKey().equals("userProfileUrl")) {
+                    userProfile.setUserProfileUrl(str);
+                }
+                mUserProfile.getUserProfile(userProfile);
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 

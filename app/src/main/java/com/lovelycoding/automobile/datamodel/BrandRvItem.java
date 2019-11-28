@@ -41,6 +41,7 @@ public class BrandRvItem {
 
     @BindingAdapter("brandImageUrl")
     public static void loadImage(ImageView view, String brandImageUrl) {
+
         Log.d(TAG, "loadImage:image loaded int view  "+brandImageUrl);
         Glide.with(view.getContext()).load(brandImageUrl).into(view);
 

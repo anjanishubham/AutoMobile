@@ -11,7 +11,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class App {
+public class DatabaseRef {
     public static  FirebaseAuth mAuth;
     public static DatabaseReference mRootDatabaseRef;
     public static DatabaseReference mBrandDatabaseRef;
@@ -22,6 +22,8 @@ public class App {
     public static DatabaseReference mCurrentUserDatabaseRef;
     public static DatabaseReference mCurrentUserRecentBrandDatabaseRef;
     public static DatabaseReference mCurrentUserRecentCategoryDatabaseRef;
+    public static DatabaseReference mCurrentUserProfileDatabaseRef;
+    public static StorageReference mCurrentUserProfileImageStorageRef;
     private static Context context;
 
     public static void fireBaseInstance(Context context1){
@@ -36,6 +38,9 @@ public class App {
         mCurrentUserDatabaseRef=mRootDatabaseRef.child(mAuth.getUid()).child("_product");
         mCurrentUserRecentBrandDatabaseRef=mRootDatabaseRef.child(mAuth.getUid()).child("_recent_brand");
         mCurrentUserRecentCategoryDatabaseRef=mRootDatabaseRef.child(mAuth.getUid()).child("_recent_category");
+        mCurrentUserProfileDatabaseRef=mRootDatabaseRef.child(Constant.USER_PROFILE_DATABASE);
+        mCurrentUserProfileImageStorageRef=FirebaseStorage.getInstance().getReference(Constant.USER_PROFILE_IMAGE_STORAGE);
+
         mRootDatabaseRef.keepSynced(true);
 
 

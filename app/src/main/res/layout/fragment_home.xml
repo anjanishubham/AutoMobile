@@ -34,7 +34,8 @@
                     android:id="@+id/product_image_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:onClick="@{handlers::onImageSelect}" />
+                    android:src="@drawable/add_image_256"
+                android:onClick="@{handlers::onImageSelect}" />
 
                 <androidx.viewpager.widget.ViewPager xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/product_image_viewpager"
@@ -120,7 +121,9 @@
                 android:layout_height="match_parent"
                 android:layout_margin="@dimen/top_margin_16dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_brand" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_brand"
+
+                />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_selected_brand"
@@ -195,6 +198,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/product_name"
+                    android:background="@drawable/border"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/product_name" />
@@ -240,6 +244,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:background="@drawable/border"
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -261,6 +266,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:background="@drawable/border"
                     android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>

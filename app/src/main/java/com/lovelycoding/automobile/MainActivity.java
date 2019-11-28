@@ -7,8 +7,9 @@ import android.util.Log;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.lovelycoding.automobile.repository.SaveDataIntoFireBase;
 import com.lovelycoding.automobile.ui.login.LoginActivity;
-import com.lovelycoding.automobile.util.App;
+import com.lovelycoding.automobile.util.DatabaseRef;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,9 +35,9 @@ public class MainActivity extends AppCompatActivity  {
             startActivity(intent);
         }
         else {
-            App.fireBaseInstance(MainActivity.this);
-            Log.d(TAG, "onCreate: "+App.mAuth);
-            Log.d(TAG, "onCreate: "+App.mAuth);
+            DatabaseRef.fireBaseInstance(MainActivity.this);
+            Log.d(TAG, "onCreate: "+ DatabaseRef.mAuth);
+            Log.d(TAG, "onCreate: "+ DatabaseRef.mAuth);
             AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                     R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_settings)
                     .build();
