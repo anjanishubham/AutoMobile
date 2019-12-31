@@ -1,4 +1,4 @@
-package com.lovelycoding.automobile.ui.home.category.adapter;
+package com.lovelycoding.automobile.ui.category.adapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +23,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryViewHolder> im
     CategoryListener mListener;
     List<PcategoryRvItem> mCategoryFilterList;
 
-    public CategoryAdapter(CategoryListener mListener) {
+    public CategoryAdapter() {
         mCategoryList = new ArrayList<>();
     }
 

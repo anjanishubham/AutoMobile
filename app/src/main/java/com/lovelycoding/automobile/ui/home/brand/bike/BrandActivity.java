@@ -4,25 +4,20 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.lovelycoding.automobile.R;
 import com.lovelycoding.automobile.databinding.ActivityBrandBinding;
@@ -31,7 +26,7 @@ import com.lovelycoding.automobile.repository.GetDataFromFireBase;
 import com.lovelycoding.automobile.ui.home.brand.adapter.BrandAdapter;
 import com.lovelycoding.automobile.ui.home.brand.adapter.BrandListener;
 import com.lovelycoding.automobile.ui.home.brand.adapter.GridSpacingItemDecoration;
-import com.lovelycoding.automobile.ui.home.brand.dialogfragment.AddNewBrad;
+import com.lovelycoding.automobile.ui.dialogfragment.AddNewBrad;
 import com.lovelycoding.automobile.ui.home.SelectItemCallback;
 
 import java.util.ArrayList;

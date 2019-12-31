@@ -1,4 +1,4 @@
-package com.lovelycoding.automobile.ui.home.category.adapter;
+package com.lovelycoding.automobile.ui.category.adapter;
 
 import android.graphics.Rect;
 import android.view.View;

@@ -100,8 +100,8 @@ public class HomeFragmentModel {
     public boolean verifyInput() {
 
         product.setMotorName(dataBinding.spinnerMotorType.getSelectedItem().toString());
-        product.setMotorBrandName(dataBinding.recentBrandLayout.ivSelect.tvRecentItemName.getText().toString());
-        product.setProductCategory(dataBinding.recentCategoryLayout.ivSelect.tvRecentItemName.getText().toString());
+       // product.setMotorBrandName(dataBinding.recentBrandLayout.ivSelect.tvRecentItemName.getText().toString());
+        //product.setProductCategory(dataBinding.recentCategoryLayout.ivSelect.tvRecentItemName.getText().toString());
         if(!dataBinding.productName.getText().toString().isEmpty())
         {
             product.setProductName(dataBinding.productName.getText().toString());

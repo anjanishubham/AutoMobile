@@ -7,7 +7,7 @@
     android:minHeight="400dp"
     android:minWidth="400dp"
     android:orientation="vertical"
-    tools:context=".ui.home.brand.dialogfragment.AddNewBrad">
+    tools:context=".ui.dialogfragment.AddNewBrad">
 
     <!-- TODO: Update blank fragment layout -->
 

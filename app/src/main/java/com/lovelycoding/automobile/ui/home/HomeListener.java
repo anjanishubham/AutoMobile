@@ -5,8 +5,7 @@ import android.util.Log;
 import android.view.View;
 import com.lovelycoding.automobile.databinding.FragmentHomeBinding;
 import com.lovelycoding.automobile.datamodel.Product;
-import com.lovelycoding.automobile.ui.home.brand.bike.BrandActivity;
-import com.lovelycoding.automobile.ui.home.category.CategoryActivity;
+import com.lovelycoding.automobile.ui.category.CategoryActivity;
 import com.lovelycoding.automobile.util.DatabaseRef;
 
 public class HomeListener {
@@ -20,11 +19,10 @@ public class HomeListener {
         public void checkRuntimePermission();
     }
 
-    public HomeListener(Context context, SelectItemCallback callbackInterface, FragmentHomeBinding dataBinding, RuntimePermission mPermission) {
+    public HomeListener(Context context,FragmentHomeBinding dataBinding, RuntimePermission mPermission) {
         mFModel=new HomeFragmentModel(context,dataBinding);
         this.mPermission=mPermission;
         this.binding=dataBinding;
-        this.callbackInterface=callbackInterface;
     }
 
     public void onClickProductType(View view){
@@ -46,19 +44,13 @@ public class HomeListener {
 
 
     public void onSelectBrand(View view) {
-        Intent intent=new Intent(view.getContext(),BrandActivity.class);
-        intent.putExtra("motorType",binding.spinnerMotorType.getSelectedItem().toString());
-        view.getContext().startActivity(intent);
-        BrandActivity.setBrandActivityInterface(callbackInterface);
+
+
+        Log.d(TAG, "onSelectBrand: ");
+
     }
 
-    public void onSelectCategory(View view) {
-        Intent intent=new Intent(view.getContext(), CategoryActivity.class);
-        intent.putExtra("motorType",binding.spinnerMotorType.getSelectedItem().toString());
-        //intent.putExtra("selectItemCallback", (Parcelable) selectItemCallback);
-        view.getContext().startActivity(intent);
-        CategoryActivity.getCallBackInterfaceObject(callbackInterface);
-    }
+    
 
     public void addProductCount(View view) {
 
@@ -101,6 +93,8 @@ public class HomeListener {
     public void onClickSelectImage(View View) {
         mPermission.checkRuntimePermission();
     }
+
+    
 
 
 

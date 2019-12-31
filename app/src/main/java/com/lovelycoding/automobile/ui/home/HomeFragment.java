@@ -7,6 +7,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.TypedValue;
@@ -44,24 +45,20 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 
-public class HomeFragment extends Fragment implements HomeListener.RuntimePermission , BrandListener ,SelectItemCallback, RecentCategoryInterface {
+public class HomeFragment extends Fragment implements HomeListener.RuntimePermission  {
 
     private static final String TAG = "HomeFragment";
     private HomeViewModel homeViewModel;
     private ViewPager mProductImageViewPager;
     private ViewPager mRecentCategoryViewpager,mRecentBrandViewpager;
-    private HomeListener handler;
+    private HomeListener mHomeListenHandler;
     private FragmentHomeBinding binding;
     private static final int PICK_FROM_GALLERY = 1;
     private static final int EXTERNAL_STORAGE_PERMISSION_CONSTANT = 100;
     private static List<Bitmap> bitmapList = new ArrayList<>();
     private static List<Uri> uriList = new ArrayList<>();
     private PagerAdapter mPagerAdapter;
-    private RecentBrandPageAdapter mRecentBrandPagerAdapter;
-    private BrandAdapter mAdapter;
-    private RecentCategoryPageAdapter mRecentCatPagerAdapter;
-    private List<PcategoryRvItem> mRecentCategoryList = new ArrayList<>();
-    private List<BrandRvItem> mRecentBrandList = new ArrayList<>();
+
 
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,30 +67,13 @@ public class HomeFragment extends Fragment implements HomeListener.RuntimePermis
         binding= DataBindingUtil.inflate(inflater,R.layout.fragment_home,container,false);
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         mProductImageViewPager=binding.productImageViewpager;
-        mRecentCategoryViewpager=binding.recentCategoryLayout.viewPagerRecent;
-        mRecentBrandViewpager=binding.recentBrandLayout.viewPagerRecent;
-        mRecentBrandViewpager=binding.recentBrandLayout.viewPagerRecent;
-        loadDataFromFirebseOnceAppStarted();
-        handler=new HomeListener(getContext(),this,binding,this);
-        binding.setHandlers(handler);
+        mHomeListenHandler = new HomeListener(getContext(),binding,this);
+        binding.setHandlers(mHomeListenHandler);
         mPagerAdapter=new PagerAdapter(getContext());
-        mAdapter=new BrandAdapter(this);
-        mRecentCatPagerAdapter =new RecentCategoryPageAdapter();
-        mRecentBrandPagerAdapter=new RecentBrandPageAdapter();
+
         return binding.getRoot();
     }
 
-    private void loadDataFromFirebseOnceAppStarted() {
-        //checking network connection if network is there then load the recent View
-        if(!MyApplication.isNetworkAvailable){
-            Toast.makeText(getContext(), "Please check your network connection ", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            binding.progressCircular.setVisibility(View.VISIBLE);
-            GetDataFromFireBase.getInstance().getRecentCategoryDataFromDataBase(this);
-            GetDataFromFireBase.getInstance().getRecentBrandDataFromDatabase(this);
-        }
-    }
 
     private void openGallery() {
         Intent intent = new Intent();
@@ -125,38 +105,7 @@ public class HomeFragment extends Fragment implements HomeListener.RuntimePermis
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mRecentCategoryViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                setCategoryItem(mRecentCategoryList.get(position));
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        mRecentBrandViewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                setBrandItem(mRecentBrandList.get(position));
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
     }
 
@@ -199,44 +148,7 @@ public class HomeFragment extends Fragment implements HomeListener.RuntimePermis
         Log.d(TAG, "onResume: ");
     }
 
-    // update the category UI
-    private void setCategoryItem(PcategoryRvItem ob) {
-        if(ob!=null) {
-            Log.d(TAG, "setCategory: "+ob.toString());
-            Glide.with(this).load(ob.getCategoryItemUrl()).into(binding.recentCategoryLayout.ivSelect.ivSelect);
-            binding.recentCategoryLayout.ivSelect.tvRecentItemName.setText(ob.getCategoryItemName());
 
-        }
-    }
-
-    private void setBrandItem(BrandRvItem ob) {
-        Glide.with(this).load(ob.getBrandImageUrl()).into(binding.recentBrandLayout.ivSelect.ivSelect);
-        binding.recentBrandLayout.ivSelect.tvRecentItemName.setText(ob.getBrandName());
-
-    }
-
-// retrieve from database and show in viewpager
-    private void initRecentCategoryViewPager() {
-
-        binding.recentCategoryLayout.tvEmptyViewPager.setVisibility(View.GONE);
-        mRecentCategoryViewpager=binding.recentCategoryLayout.viewPagerRecent;
-        mRecentCategoryViewpager.setPadding(80, 0, 80, 0);
-        mRecentCategoryViewpager.setPageMargin(20);
-        mRecentCatPagerAdapter.setRecentCategoryList(mRecentCategoryList);
-        mRecentCategoryViewpager.setAdapter(mRecentCatPagerAdapter);
-        //mRecentCategoryViewpager.
-    }
-     private void initRecentBrandViewPager() {
-
-        binding.recentBrandLayout.tvEmptyViewPager.setVisibility(View.GONE);
-        mRecentBrandViewpager=binding.recentBrandLayout.viewPagerRecent;
-         mRecentBrandViewpager.setClipToPadding(false);
-         mRecentBrandViewpager.setPadding(80, 0, 80, 0);
-         mRecentBrandViewpager.setPageMargin(20);
-        mRecentBrandPagerAdapter.setBrandList(mRecentBrandList);
-         mRecentBrandViewpager.setAdapter(mRecentBrandPagerAdapter);
-        //mRecentCategoryViewpager.
-    }
 
 
     public int dpToPx(int dp) {
@@ -245,10 +157,7 @@ public class HomeFragment extends Fragment implements HomeListener.RuntimePermis
     }
 
 
-    @Override
-    public void onClick(View view) {
 
-    }
 
 
     private void getRuntimePermission() {
@@ -299,88 +208,7 @@ public class HomeFragment extends Fragment implements HomeListener.RuntimePermis
 
     }
 
-    @Override
-    public void readRecentCategoryData(List<PcategoryRvItem> mRecentCategoryList) {
-        binding.progressCircular.setVisibility(View.GONE);
-        Log.d(TAG, "readRecentCategoryData: "+mRecentCategoryList);
-        this.mRecentCategoryList=mRecentCategoryList;
-        if(mRecentCategoryList.size()>0) {
-            binding.recentCategoryLayout.tvEmptyViewPager.setVisibility(View.GONE);
 
-            initRecentCategoryViewPager();
-            setCategoryItem(mRecentCategoryList.get(0));
-        }
-        else {
-            binding.recentCategoryLayout.tvEmptyViewPager.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    @Override
-    public void readRecentBrandData(List<BrandRvItem> mRecentBrandList) {
-        binding.progressCircular.setVisibility(View.GONE);
-        Log.d(TAG, "readRecentBrandData: " + mRecentBrandList.size());
-        this.mRecentBrandList=mRecentBrandList;
-        if(mRecentBrandList.size()>0) {
-            binding.recentBrandLayout.tvEmptyViewPager.setVisibility(View.GONE);
-
-            initRecentBrandViewPager();
-            setBrandItem(mRecentBrandList.get(0));
-        }
-        else {
-            binding.recentBrandLayout.tvEmptyViewPager.setVisibility(View.VISIBLE);
-        }
-
-    }
-
-        @Override
-    public void itemClicked(int position) {
-
-    }
-
-    @Override
-    public void getSelectCategoryItem(PcategoryRvItem ob) {
-        setCategoryItem(ob);
-        updateRecentCategoryList(ob);
-    }
-
-    @Override
-    public void getSelectBrandItem(BrandRvItem ob) {
-        setBrandItem(ob);
-        updateRecentBrandList(ob);
-    }
-    @Override
-    public void updateRecentBrandData(BrandRvItem mBrandItem) {
-
-    }
-
-    @Override
-    public void updateRecentCategoryData(PcategoryRvItem mCategoryItem) {
-        Log.d(TAG, "updateRecentCategoryData: "+mCategoryItem.getCategoryItemName());
-    }
-
-    public void updateRecentBrandList(BrandRvItem mBrandItem){
-        mRecentBrandList.add(0,mBrandItem);
-        Log.d(TAG, "updateRecentBrandList: "+mRecentBrandList.size());
-        if (mRecentBrandList.size() > 4) {
-            mRecentBrandList.remove(4);
-        }
-        SaveDataIntoFireBase.getInstance().saveRecentBrandDataIntoDatabase(mRecentBrandList);
-        mRecentBrandPagerAdapter.setBrandList(mRecentBrandList);
-        mRecentBrandViewpager.setAdapter(mRecentBrandPagerAdapter);
-        mRecentBrandPagerAdapter.notifyDataSetChanged();
-    }
-    public void updateRecentCategoryList(PcategoryRvItem mCategory){
-        mRecentCategoryList.add(0,mCategory);
-        Log.d(TAG, "updateRecentBrandList: "+mRecentCategoryList.size());
-        if (mRecentCategoryList.size() > 4) {
-            mRecentCategoryList.remove(4);
-        }
-        SaveDataIntoFireBase.getInstance().saveRecentCategoryDataIntoDatabase(mRecentCategoryList);
-        mRecentCatPagerAdapter.setRecentCategoryList(mRecentCategoryList);
-        mRecentCategoryViewpager.setAdapter(mRecentCatPagerAdapter);
-        mRecentCatPagerAdapter.notifyDataSetChanged();
-    }
 
 
 }

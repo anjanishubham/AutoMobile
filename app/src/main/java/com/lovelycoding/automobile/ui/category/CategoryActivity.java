@@ -1,4 +1,4 @@
-package com.lovelycoding.automobile.ui.home.category;
+package com.lovelycoding.automobile.ui.category;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,10 +24,10 @@ import com.lovelycoding.automobile.R;
 import com.lovelycoding.automobile.databinding.ActivityCategoryBinding;
 import com.lovelycoding.automobile.datamodel.PcategoryRvItem;
 import com.lovelycoding.automobile.ui.home.brand.adapter.GridSpacingItemDecoration;
-import com.lovelycoding.automobile.ui.home.brand.dialogfragment.AddNewBrad;
-import com.lovelycoding.automobile.ui.home.brand.dialogfragment.NetworkNotFound;
-import com.lovelycoding.automobile.ui.home.category.adapter.CategoryAdapter;
-import com.lovelycoding.automobile.ui.home.category.adapter.CategoryListener;
+import com.lovelycoding.automobile.ui.dialogfragment.AddNewBrad;
+import com.lovelycoding.automobile.ui.dialogfragment.NetworkNotFound;
+import com.lovelycoding.automobile.ui.category.adapter.CategoryAdapter;
+import com.lovelycoding.automobile.ui.category.adapter.CategoryListener;
 import com.lovelycoding.automobile.ui.home.SelectItemCallback;
 import com.lovelycoding.automobile.util.DatabaseRef;
 

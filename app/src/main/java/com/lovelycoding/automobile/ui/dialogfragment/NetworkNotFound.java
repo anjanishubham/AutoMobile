@@ -1,4 +1,4 @@
-package com.lovelycoding.automobile.ui.home.brand.dialogfragment;
+package com.lovelycoding.automobile.ui.dialogfragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

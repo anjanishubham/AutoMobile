@@ -1,11 +1,11 @@
-package com.lovelycoding.automobile.ui.home.category;
+package com.lovelycoding.automobile.ui.category;
 
 import android.widget.ProgressBar;
 
 import androidx.lifecycle.ViewModel;
 
 import com.lovelycoding.automobile.repository.GetDataFromFireBase;
-import com.lovelycoding.automobile.ui.home.category.adapter.CategoryAdapter;
+import com.lovelycoding.automobile.ui.category.adapter.CategoryAdapter;
 
 public class CategoryViewModel extends ViewModel {
 

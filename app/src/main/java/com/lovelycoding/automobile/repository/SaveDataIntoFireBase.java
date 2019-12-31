@@ -15,7 +15,7 @@ import com.google.firebase.storage.UploadTask;
 import com.lovelycoding.automobile.datamodel.BrandRvItem;
 import com.lovelycoding.automobile.datamodel.PcategoryRvItem;
 import com.lovelycoding.automobile.datamodel.Product;
-import com.lovelycoding.automobile.ui.home.brand.dialogfragment.AddNewBrad;
+import com.lovelycoding.automobile.ui.dialogfragment.AddNewBrad;
 import com.lovelycoding.automobile.util.DatabaseRef;
 
 import java.util.HashMap;

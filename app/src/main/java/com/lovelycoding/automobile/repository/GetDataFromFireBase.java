@@ -18,11 +18,10 @@ import com.lovelycoding.automobile.datamodel.PcategoryRvItem;
 import com.lovelycoding.automobile.datamodel.Product;
 import com.lovelycoding.automobile.datamodel.UserProfile;
 import com.lovelycoding.automobile.ui.home.brand.bike.BrandListCallback;
-import com.lovelycoding.automobile.ui.home.category.adapter.CategoryAdapter;
+import com.lovelycoding.automobile.ui.category.adapter.CategoryAdapter;
 import com.lovelycoding.automobile.ui.callback_interface.RecentCategoryInterface;
 import com.lovelycoding.automobile.ui.dashboard.callback.DashboardCallback;
 import com.lovelycoding.automobile.ui.settings.SettingUserProfile;
-import com.lovelycoding.automobile.ui.settings.SettingsViewModel;
 import com.lovelycoding.automobile.util.DatabaseRef;
 
 import java.util.ArrayList;

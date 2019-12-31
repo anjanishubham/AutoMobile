@@ -1,4 +1,4 @@
-package com.lovelycoding.automobile.ui.home.brand.dialogfragment;
+package com.lovelycoding.automobile.ui.dialogfragment;
 
 
 import android.Manifest;
@@ -34,7 +34,7 @@ import com.lovelycoding.automobile.datamodel.BrandRvItem;
 import com.lovelycoding.automobile.datamodel.PcategoryRvItem;
 import com.lovelycoding.automobile.repository.SaveDataIntoFireBase;
 import com.lovelycoding.automobile.ui.home.brand.bike.BrandActivity;
-import com.lovelycoding.automobile.ui.home.category.CategoryActivity;
+import com.lovelycoding.automobile.ui.category.CategoryActivity;
 
 import java.io.IOException;
 

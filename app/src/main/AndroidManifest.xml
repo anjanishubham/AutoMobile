@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.login.PhoneLoginActivity" />
-        <activity android:name=".ui.home.category.CategoryActivity" />
+        <activity android:name=".ui.category.CategoryActivity" />
         <activity android:name=".ui.home.brand.car.CarActivity" />
         <activity android:name=".ui.home.brand.bike.BrandActivity">
             <meta-data
